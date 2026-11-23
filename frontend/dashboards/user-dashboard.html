@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resident Dashboard — UrjaSense AI</title><link rel="icon" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/dashboard.css"><link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../vendor/leaflet.css">
+</head>
+<body class="dash">
+<div class="shell">
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="brand" href="../index.html"><img src="../assets/images/logo.svg" alt=""><b>URJASENSE <span>AI</span></b></a>
+    <div class="role-chip">Resident</div>
+    <button class="nav-item" data-view="overview"><span class="ico" aria-hidden="true">▦</span><span data-i18n="nav_overview">Overview</span></button>
+    <button class="nav-item" data-view="report"><span class="ico" aria-hidden="true">⚡</span><span data-i18n="nav_report">Report Power Outage</span></button>
+    <button class="nav-item" data-view="map"><span class="ico" aria-hidden="true">◎</span><span data-i18n="nav_map">Live Outage Map</span></button>
+    <button class="nav-item" data-view="myreports"><span class="ico" aria-hidden="true">☰</span><span data-i18n="nav_myreports">My Reports</span></button>
+    <button class="nav-item" data-view="notifications"><span class="ico" aria-hidden="true">🔔</span><span data-i18n="nav_notifications">Notifications</span></button>
+    <button class="nav-item" data-view="history"><span class="ico" aria-hidden="true">⟲</span><span data-i18n="nav_history">Outage History</span></button>
+    <button class="nav-item" data-view="feedback"><span class="ico" aria-hidden="true">★</span><span data-i18n="nav_feedback">Ratings and Feedback</span></button>
+    <button class="nav-item" data-view="profile"><span class="ico" aria-hidden="true">☺</span><span data-i18n="nav_profile">Profile and Settings</span></button>
+    <div class="spacer"></div>
+    <button class="nav-item" id="logout-btn"><span class="ico" aria-hidden="true">⎋</span><span data-i18n="logout">Log out</span></button>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+      <h1 id="page-title">Dashboard</h1>
+      <select class="lang-select"></select>
+      <span class="userchip" id="userchip"></span>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+<script src="../vendor/leaflet.js"></script>
+<script src="../vendor/chart.umd.js"></script>
+<script src="../js/i18n.js"></script><script src="../js/main.js"></script><script src="../js/user.js"></script>
+</body></html>

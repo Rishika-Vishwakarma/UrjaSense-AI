@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register — UrjaSense AI</title><link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="topnav"><div class="inner">
+  <a class="brand" href="index.html"><img src="assets/images/logo.svg" alt=""><b>URJASENSE <span>AI</span></b></a>
+  <nav><select class="lang-select"></select><a class="btn btn-light btn-sm" href="login.html" data-i18n="login">Log in</a></nav>
+</div></header>
+<main class="auth-wrap"><div class="auth-card">
+  <h1 data-i18n="register">Create resident account</h1>
+  <p style="color:var(--muted)">Employee (lineman) accounts are created by administrators only.</p>
+  <form id="auth-form" data-mode="register" novalidate>
+    <div class="field"><label for="full_name" data-i18n="full_name">Full name</label><input id="full_name" name="full_name" autocomplete="name" required></div>
+    <div class="field"><label for="email" data-i18n="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="phone" data-i18n="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel"></div>
+    <div class="field"><label for="area_id" data-i18n="area">Your area</label><select id="area_id" name="area_id"></select></div>
+    <div class="field"><label for="password" data-i18n="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" required>
+      <span class="hint">At least 8 characters, with letters and digits.</span></div>
+    <p class="error-text" id="form-error" role="alert"></p>
+    <button class="btn btn-primary" style="width:100%" type="submit" data-i18n="register">Register</button>
+  </form>
+</div></main>
+<script src="js/i18n.js"></script><script src="js/main.js"></script><script src="js/auth.js"></script>
+</body></html>

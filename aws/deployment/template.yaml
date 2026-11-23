@@ -1,0 +1,140 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  UrjaSense AI (Team SparkX) - reference AWS stack: API Gateway HTTP API + Lambda (Flask),
+  RDS for MySQL, SNS topic, S3 bucket for the static frontend, CloudWatch alarms.
+  NOT deployed from this repository; review and adapt before use.
+
+Parameters:
+  SecretKey:      { Type: String, NoEcho: true, MinLength: 32, Description: JWT signing secret }
+  DbPassword:     { Type: String, NoEcho: true, MinLength: 12 }
+  VpcId:          { Type: AWS::EC2::VPC::Id }
+  PrivateSubnets: { Type: "List<AWS::EC2::Subnet::Id>", Description: At least two private subnets in different AZs }
+  FrontendOrigin: { Type: String, Default: "https://example.com", Description: Allowed CORS origin }
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 30
+    MemorySize: 1024
+    Tracing: Active
+
+Resources:
+  LambdaSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties: { GroupDescription: UrjaSense Lambda, VpcId: !Ref VpcId }
+  DbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: MySQL from Lambda only
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - { IpProtocol: tcp, FromPort: 3306, ToPort: 3306, SourceSecurityGroupId: !Ref LambdaSg }
+  DbSubnets:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties: { DBSubnetGroupDescription: UrjaSense, SubnetIds: !Ref PrivateSubnets }
+  Database:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+    Properties:
+      Engine: mysql
+      EngineVersion: "8.0"
+      DBInstanceClass: db.t3.micro
+      AllocatedStorage: 20
+      DBName: urjasense
+      MasterUsername: urjaadmin
+      MasterUserPassword: !Ref DbPassword
+      StorageEncrypted: true
+      PubliclyAccessible: false
+      BackupRetentionPeriod: 7
+      DBSubnetGroupName: !Ref DbSubnets
+      VPCSecurityGroups: [!Ref DbSg]
+  NotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties: { DisplayName: UrjaSense AI updates }
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration: { BlockPublicAcls: true, BlockPublicPolicy: true, IgnorePublicAcls: true, RestrictPublicBuckets: true }
+      BucketEncryption:
+        ServerSideEncryptionConfiguration: [{ ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 } }]
+      # Serve through CloudFront (origin access control) + ACM certificate for HTTPS; not included here.
+
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: [!Ref FrontendOrigin]
+        AllowMethods: [GET, POST, PUT, OPTIONS]
+        AllowHeaders: [Authorization, Content-Type]
+      DefaultRouteSettings: { ThrottlingBurstLimit: 50, ThrottlingRateLimit: 25 }   # API Gateway throttling
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../../                      # project root (package with requirements.txt)
+      Handler: aws/lambda/api_handler.handler
+      VpcConfig: { SecurityGroupIds: [!Ref LambdaSg], SubnetIds: !Ref PrivateSubnets }
+      Environment:
+        Variables:
+          SECRET_KEY: !Ref SecretKey
+          DB_HOST: !GetAtt Database.Endpoint.Address
+          DB_USER: urjaadmin
+          DB_PASSWORD: !Ref DbPassword
+          DB_NAME: urjasense
+          CORS_ORIGINS: !Ref FrontendOrigin
+          FORCE_HTTPS: "1"
+          SNS_ENABLED: "1"
+          SNS_TOPIC_ARN: !Ref NotificationTopic
+      Policies:
+        - SNSPublishMessagePolicy: { TopicName: !GetAtt NotificationTopic.TopicName }
+        - VPCAccessPolicy: {}
+      Events:
+        Api: { Type: HttpApi, Properties: { ApiId: !Ref HttpApi, Path: "/api/{proxy+}", Method: ANY } }
+
+  PredictFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../../
+      Handler: aws/lambda/predict_handler.handler
+
+  NotifyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../../
+      Handler: aws/lambda/notify_handler.handler
+      Environment: { Variables: { SNS_TOPIC_ARN: !Ref NotificationTopic } }
+      Policies:
+        - SNSPublishMessagePolicy: { TopicName: !GetAtt NotificationTopic.TopicName }
+
+  ApiErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: API Lambda errors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions: [{ Name: FunctionName, Value: !Ref ApiFunction }]
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions: [!Ref NotificationTopic]
+  DbCpuAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: AWS/RDS
+      MetricName: CPUUtilization
+      Dimensions: [{ Name: DBInstanceIdentifier, Value: !Ref Database }]
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions: [!Ref NotificationTopic]
+
+Outputs:
+  ApiUrl:         { Value: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com" }
+  FrontendBucket: { Value: !Ref FrontendBucket }
+  DbEndpoint:     { Value: !GetAtt Database.Endpoint.Address }

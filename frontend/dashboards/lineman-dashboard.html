@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lineman Dashboard — UrjaSense AI</title><link rel="icon" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/dashboard.css"><link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../vendor/leaflet.css">
+</head>
+<body class="dash">
+<div class="shell">
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="brand" href="../index.html"><img src="../assets/images/logo.svg" alt=""><b>URJASENSE <span>AI</span></b></a>
+    <div class="role-chip">Lineman</div>
+    <button class="nav-item" data-view="overview"><span class="ico" aria-hidden="true">▦</span><span data-i18n="nav_overview">Overview</span></button>
+    <button class="nav-item" data-view="assigned"><span class="ico" aria-hidden="true">☰</span><span data-i18n="nav_assigned">Assigned Incidents</span></button>
+    <button class="nav-item" data-view="details"><span class="ico" aria-hidden="true">◎</span><span data-i18n="nav_details">Incident Details</span></button>
+    <button class="nav-item" data-view="status"><span class="ico" aria-hidden="true">⇄</span><span data-i18n="nav_status">Update Status</span></button>
+    <button class="nav-item" data-view="eta"><span class="ico" aria-hidden="true">⏱</span><span data-i18n="nav_eta">Update Restoration Time</span></button>
+    <button class="nav-item" data-view="repairs"><span class="ico" aria-hidden="true">⟲</span><span data-i18n="nav_repairs">Repair History</span></button>
+    <button class="nav-item" data-view="profile"><span class="ico" aria-hidden="true">☺</span><span data-i18n="nav_profile">Profile</span></button>
+    <div class="spacer"></div>
+    <button class="nav-item" id="logout-btn"><span class="ico" aria-hidden="true">⎋</span><span data-i18n="logout">Log out</span></button>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+      <h1 id="page-title">Dashboard</h1>
+      <select class="lang-select"></select>
+      <span class="userchip" id="userchip"></span>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+<script src="../vendor/leaflet.js"></script>
+<script src="../vendor/chart.umd.js"></script>
+<script src="../js/i18n.js"></script><script src="../js/main.js"></script><script src="../js/lineman.js"></script>
+</body></html>

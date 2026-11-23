@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administrator Dashboard — UrjaSense AI</title><link rel="icon" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/dashboard.css"><link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../vendor/leaflet.css">
+</head>
+<body class="dash">
+<div class="shell">
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="brand" href="../index.html"><img src="../assets/images/logo.svg" alt=""><b>URJASENSE <span>AI</span></b></a>
+    <div class="role-chip">Administrator</div>
+    <button class="nav-item" data-view="overview"><span class="ico" aria-hidden="true">▦</span><span data-i18n="nav_overview">Overview</span></button>
+    <button class="nav-item" data-view="users"><span class="ico" aria-hidden="true">☺</span><span data-i18n="nav_users">Manage Users</span></button>
+    <button class="nav-item" data-view="linemen"><span class="ico" aria-hidden="true">⚙</span><span data-i18n="nav_linemen">Manage Linemen</span></button>
+    <button class="nav-item" data-view="incidents"><span class="ico" aria-hidden="true">⚡</span><span data-i18n="nav_incidents">Manage Incidents</span></button>
+    <button class="nav-item" data-view="assignments"><span class="ico" aria-hidden="true">⇄</span><span data-i18n="nav_assignments">Assignments</span></button>
+    <button class="nav-item" data-view="analytics"><span class="ico" aria-hidden="true">📈</span><span data-i18n="nav_analytics">Analytics and Reports</span></button>
+    <button class="nav-item" data-view="areas"><span class="ico" aria-hidden="true">◎</span><span data-i18n="nav_areas">Areas and Locations</span></button>
+    <button class="nav-item" data-view="feedback"><span class="ico" aria-hidden="true">★</span><span data-i18n="nav_feedback">Feedback</span></button>
+    <button class="nav-item" data-view="broadcast"><span class="ico" aria-hidden="true">🔔</span><span data-i18n="nav_broadcast">Notifications</span></button>
+    <button class="nav-item" data-view="logs"><span class="ico" aria-hidden="true">☷</span><span data-i18n="nav_logs">System Logs</span></button>
+    <div class="spacer"></div>
+    <button class="nav-item" id="logout-btn"><span class="ico" aria-hidden="true">⎋</span><span data-i18n="logout">Log out</span></button>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+      <h1 id="page-title">Dashboard</h1>
+      <select class="lang-select"></select>
+      <span class="userchip" id="userchip"></span>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+<script src="../vendor/leaflet.js"></script>
+<script src="../vendor/chart.umd.js"></script>
+<script src="../js/i18n.js"></script><script src="../js/main.js"></script><script src="../js/admin.js"></script>
+</body></html>

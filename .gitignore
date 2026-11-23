@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+database/urjasense_local.db
+ai_ml/models/*.joblib
+node_modules/
+.venv/
+.aws-sam/

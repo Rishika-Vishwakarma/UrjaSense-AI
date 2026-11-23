@@ -1,0 +1,24 @@
+/* Responsive rules: tablet <= 1024px, mobile <= 760px */
+@media (max-width: 1024px) {
+  .shell { grid-template-columns: 220px 1fr; }
+  .content { padding: 18px; }
+}
+@media (max-width: 760px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; z-index: 800; width: 270px; transform: translateX(-100%); transition: transform .2s; box-shadow: var(--shadow); }
+  .sidebar.open { transform: none; }
+  .menu-btn { display: inline-grid; place-items: center; }
+  .topbar { padding: 10px 14px; gap: 8px; }
+  .topbar h1 { font-size: 1.05rem; }
+  .userchip { display: none; }
+  .content { padding: 14px; }
+  .two { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat .value { font-size: 1.5rem; }
+  #map { height: 340px; }
+  .modal { padding: 16px; }
+  .auth-card { padding: 22px; }
+  th, td { padding: 8px; }
+}
+@media (max-width: 420px) { .cards { grid-template-columns: 1fr; } .toolbar .field { min-width: 100%; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }

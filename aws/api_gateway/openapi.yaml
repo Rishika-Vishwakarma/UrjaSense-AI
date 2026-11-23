@@ -1,0 +1,24 @@
+# Amazon API Gateway (HTTP API) definition. Every /api route is proxied to the Flask Lambda.
+# Replace ${ApiFunctionArn} / ${Region} when importing (the SAM template does this for you).
+openapi: "3.0.1"
+info:
+  title: UrjaSense AI API
+  version: "1.0"
+  description: Team SparkX prototype API. JWT auth is handled by the application (Authorization - Bearer token).
+paths:
+  /api/{proxy+}:
+    x-amazon-apigateway-any-method:
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema: { type: string }
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        payloadFormatVersion: "2.0"
+        uri: arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${ApiFunctionArn}/invocations
+x-amazon-apigateway-cors:
+  allowOrigins: ["https://YOUR-FRONTEND-DOMAIN"]
+  allowMethods: [GET, POST, PUT, OPTIONS]
+  allowHeaders: [Authorization, Content-Type]

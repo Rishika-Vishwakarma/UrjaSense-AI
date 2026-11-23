@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UrjaSense AI — Report Smartly. Restore Faster. Stay Informed.</title>
+  <meta name="description" content="UrjaSense AI: smart electricity outage reporting, duplicate-complaint grouping and restoration updates. Team SparkX.">
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="topnav"><div class="inner">
+  <a class="brand" href="index.html"><img src="assets/images/logo.svg" alt=""><b>URJASENSE <span>AI</span></b></a>
+  <nav><select class="lang-select"></select>
+    <a class="btn btn-ghost btn-sm" href="login.html" data-i18n="login">Log in</a>
+    <a class="btn btn-light btn-sm" href="register.html" data-i18n="register">Register</a></nav>
+</div></header>
+
+<section class="hero"><div class="inner">
+  <div>
+    <span class="tagline" data-i18n="tagline">Report Smartly. Restore Faster. Stay Informed.</span>
+    <h1 data-i18n="hero_title">Power cut? Report it <em>once</em>.</h1>
+    <p data-i18n="hero_text">UrjaSense AI groups many complaints about the same outage into one incident, shows verified updates from the electricity department and gives an estimated restoration time.</p>
+    <div class="cta">
+      <a class="btn btn-light" href="register.html" data-i18n="get_started">Get started</a>
+      <a class="btn btn-ghost" href="#how" data-i18n="how_it_works">How it works</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <h3>Incident lifecycle</h3>
+    <ol class="flow">
+      <li><i>1</i> Reported</li><li><i>2</i> Verified</li><li><i>3</i> Assigned</li>
+      <li><i>4</i> Repair in progress</li><li><i>5</i> Resolved</li>
+    </ol>
+  </div>
+</div></section>
+
+<section class="section" id="how">
+  <h2 data-i18n="how_it_works">How it works</h2>
+  <p class="lead">One platform for residents, linemen and administrators.</p>
+  <div class="grid3">
+    <div class="feature"><h3>Duplicate-aware reporting</h3><p>Reports from the same area, time and issue are linked to one incident. Every resident's report is kept; the affected-user count grows instead of the complaint pile.</p></div>
+    <div class="feature"><h3>Transparent updates</h3><p>Follow the status, verified cause and repair progress. Official causes are entered only by authorised employees.</p></div>
+    <div class="feature"><h3>Restoration estimates</h3><p>A machine-learning model estimates restoration time. It is always labelled an estimate; the lineman's confirmed time takes priority.</p></div>
+    <div class="feature"><h3>Live outage map</h3><p>See active outages near you on a map, with status and affected households.</p></div>
+    <div class="feature"><h3>Lineman workspace</h3><p>Assigned incidents sorted by priority, with one-tap status, cause and ETA updates.</p></div>
+    <div class="feature"><h3>Admin insight</h3><p>Area statistics, outage patterns, unusual activity, feedback and a full audit log.</p></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="notice"><b>Prototype notice.</b> This is a hackathon prototype. Demo accounts and the historical outage dataset are <b>simulated sample data</b>, not information from any electricity department. Restoration times shown are model estimates.</div>
+</section>
+
+<footer class="footer"><p><b>URJASENSE AI</b> · Team <b>SparkX</b></p><p>Report Smartly. Restore Faster. Stay Informed.</p></footer>
+<script src="js/i18n.js"></script><script src="js/main.js"></script>
+<script>applyI18n(); langSelect(); document.documentElement.lang = Lang.get();</script>
+</body></html>

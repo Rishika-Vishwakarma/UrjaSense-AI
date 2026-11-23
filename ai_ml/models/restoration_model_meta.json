@@ -1,0 +1,9 @@
+{
+  "data_source": "SIMULATED_SAMPLE",
+  "n_rows": 3018,
+  "mae_minutes": 23.6,
+  "r2": 0.829,
+  "baseline_mae_minutes": 55.0,
+  "ratio_p10": 0.742,
+  "ratio_p90": 1.35
+}
