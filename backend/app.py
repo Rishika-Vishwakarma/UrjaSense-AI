@@ -50,7 +50,7 @@ def create_app(overrides: dict | None = None, engine=None) -> Flask:
     def _headers(resp):
         resp.headers["X-Content-Type-Options"] = "nosniff"
         resp.headers["X-Frame-Options"] = "DENY"
-        resp.headers["Referrer-Policy"] = "same-origin"
+        resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         if app.config["FORCE_HTTPS"]:
             resp.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         if request.path.startswith("/api/"):
